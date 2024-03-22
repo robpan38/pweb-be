@@ -3,9 +3,14 @@ spring:
     username: postgres
     password: postgres
     url: jdbc:postgresql://localhost:5432/postgres
+  flyway:
+    url: jdbc:postgresql://localhost:5432/postgres
+    schemas: public
+    user: postgres
+    password: postgres
   jpa:
-    hibernate:
-      ddl-auto: update
+#    hibernate:
+#      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect

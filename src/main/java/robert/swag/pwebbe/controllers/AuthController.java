@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import robert.swag.pwebbe.dto.JwtAuthenticationResponse;
-import robert.swag.pwebbe.dto.SignInRequest;
-import robert.swag.pwebbe.dto.SignUpRequest;
+import robert.swag.pwebbe.dto.auth.JwtAuthenticationResponse;
+import robert.swag.pwebbe.dto.auth.SignInRequest;
+import robert.swag.pwebbe.dto.auth.SignUpRequest;
 import robert.swag.pwebbe.entities.User;
 import robert.swag.pwebbe.services.AuthenticationService;
 

@@ -1,4 +1,4 @@
-package robert.swag.pwebbe.dto;
+package robert.swag.pwebbe.dto.auth;
 
 import lombok.Data;
 

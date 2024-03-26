@@ -1,11 +1,10 @@
-package robert.swag.pwebbe.dto;
+package robert.swag.pwebbe.dto.auth;
 
 import lombok.Data;
 
 @Data
-public class SignUpRequest {
+public class SignInRequest {
 
-    private String firstName;
     private String email;
     private String password;
 }

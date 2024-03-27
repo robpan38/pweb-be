@@ -20,6 +20,21 @@ public class MaterialServiceImpl implements MaterialService {
         return materialRepository.findAll();
     }
 
+    @Override
+    public Material getById(Long id) {
+        return materialRepository.findById(id).get();
+    }
+
+    @Override
+    public boolean verifyMaterialExists(Long id) {
+        return materialRepository.findById(id).isPresent();
+    }
+
+    @Override
+    public boolean verifyMaterialExists(String name) {
+        return materialRepository.findByName(name).isPresent();
+    }
+
     public Material add(MaterialDto materialDto) {
         return materialRepository.save(convertFromDto(materialDto));
     }

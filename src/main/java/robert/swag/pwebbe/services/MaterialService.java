@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface MaterialService {
     public List<Material> get();
+    public Material getById(Long id);
+    public boolean verifyMaterialExists(Long id);
+    public boolean verifyMaterialExists(String name);
     public Material add(MaterialDto materialDto);
 
     public Material update(MaterialDto materialDto);

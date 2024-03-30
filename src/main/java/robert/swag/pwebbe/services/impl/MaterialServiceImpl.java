@@ -35,6 +35,17 @@ public class MaterialServiceImpl implements MaterialService {
         return materialRepository.findByName(name).isPresent();
     }
 
+    @Override
+    public boolean verifyMaterialsExist(List<String> names) {
+        for (String name : names) {
+            if (!verifyMaterialExists(name)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public Material add(MaterialDto materialDto) {
         return materialRepository.save(convertFromDto(materialDto));
     }

@@ -10,6 +10,7 @@ public interface MaterialService {
     public Material getById(Long id);
     public boolean verifyMaterialExists(Long id);
     public boolean verifyMaterialExists(String name);
+    public boolean verifyMaterialsExist(List<String> names);
     public Material add(MaterialDto materialDto);
 
     public Material update(MaterialDto materialDto);

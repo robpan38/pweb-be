@@ -1,12 +1,18 @@
 package robert.swag.pwebbe.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="clothing_garment")
 public class ClothingGarment implements Serializable {
@@ -19,8 +25,8 @@ public class ClothingGarment implements Serializable {
     @ManyToMany
     @JoinTable(
             name="clothing_material",
-            foreignKey=@ForeignKey(name="clothing_id"),
-            inverseForeignKey=@ForeignKey(name="material_id")
+            joinColumns=@JoinColumn(name="clothing_id"),
+            inverseJoinColumns=@JoinColumn(name="material_id")
     )
     private List<Material> materials;
     @Column(name="clothing_price")

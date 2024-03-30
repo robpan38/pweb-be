@@ -1,13 +1,20 @@
 package robert.swag.pwebbe.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="collection")
 public class Collection implements Serializable {
 
@@ -23,6 +30,7 @@ public class Collection implements Serializable {
     private String season;
     @Column(name="collection_year")
     private Integer year;
+    @JsonIgnore
     @OneToMany(mappedBy="collection", cascade=CascadeType.ALL)
     private List<ClothingGarment> clothingGarments;
 }

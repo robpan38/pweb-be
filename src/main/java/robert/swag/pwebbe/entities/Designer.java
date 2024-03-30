@@ -1,5 +1,6 @@
 package robert.swag.pwebbe.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,7 @@ public class Designer implements Serializable {
     private Float id;
     @Column(name="designer_name")
     private String name;
+    @JsonIgnore
     @OneToMany(mappedBy="designer", cascade=CascadeType.ALL)
     private List<Collection> collection;
 }

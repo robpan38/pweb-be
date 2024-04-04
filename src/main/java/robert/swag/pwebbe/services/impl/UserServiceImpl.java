@@ -23,4 +23,9 @@ public class UserServiceImpl implements UserService {
             }
         };
     }
+
+    @Override
+    public String getRole(String username) {
+        return userRepository.findByEmail(username).get().getRole().toString();
+    }
 }

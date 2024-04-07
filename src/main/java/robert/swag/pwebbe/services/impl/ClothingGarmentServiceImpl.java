@@ -28,6 +28,11 @@ public class ClothingGarmentServiceImpl implements ClothingGarmentService {
     }
 
     @Override
+    public List<ClothingGarment> getFilteredByName(String name) {
+        return cgRepository.findByNameContaining(name);
+    }
+
+    @Override
     public ClothingGarment getById(Long id) {
         return cgRepository.findById(id).get();
     }

@@ -20,13 +20,16 @@ public class CollectionController {
     private final DesignerService designerService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<List<Collection>> get() {
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
+    public ResponseEntity<List<Collection>> get(@RequestParam(required = false) String name) {
+        if (name != null) {
+            return ResponseEntity.ok(collectionService.getFilteredByName(name));
+        }
         return ResponseEntity.ok(collectionService.get());
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
     public ResponseEntity<Collection> getById(@PathVariable Long id) {
         if (!collectionService.verifyCollectionExists(id)) {
             return ResponseEntity.status(404).body(null);
@@ -36,7 +39,7 @@ public class CollectionController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
     public ResponseEntity<String> add(@RequestBody CollectionDto collectionDto) {
         if (collectionDto.getName() == null || collectionService.verifyCollectionExists(collectionDto.getName())) {
             return ResponseEntity.status(400).body("There is already a collection with this name");
@@ -51,7 +54,7 @@ public class CollectionController {
     }
 
     @PostMapping("/update")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
     public ResponseEntity<String> update(@RequestBody CollectionDto collectionDto) {
         if (collectionDto.getId() == null || !collectionService.verifyCollectionExists(collectionDto.getId())) {
             return ResponseEntity.status(400).body("Provide the id for an existing collection");
@@ -74,5 +77,18 @@ public class CollectionController {
 
         collectionService.delete(id);
         return ResponseEntity.ok("Collection was successfully deleted");
+    }
+
+    @DeleteMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<String> deleteMultiple(@RequestBody List<Long> ids) {
+        for (Long id : ids) {
+            if (!collectionService.verifyCollectionExists(id)) {
+                return ResponseEntity.status(400).body("The requested collection does not exist");
+            }
+
+            collectionService.delete(id);
+        }
+        return ResponseEntity.ok("Collections successfully deleted");
     }
 }

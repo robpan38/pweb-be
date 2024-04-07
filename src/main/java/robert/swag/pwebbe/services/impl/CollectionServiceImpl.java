@@ -23,6 +23,11 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
+    public List<Collection> getFilteredByName(String name) {
+        return collectionRepository.findByNameContaining(name);
+    }
+
+    @Override
     public Collection getById(Long id) {
         return collectionRepository.findById(id).get();
     }

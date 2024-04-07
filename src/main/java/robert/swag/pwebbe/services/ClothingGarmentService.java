@@ -8,6 +8,7 @@ import java.util.List;
 public interface ClothingGarmentService {
 
     public List<ClothingGarment> get();
+    public List<ClothingGarment> getFilteredByName(String name);
     public ClothingGarment getById(Long id);
     public boolean verifyClothingGarmentExists(Long id);
     public boolean verifyClothingGarmentExists(String name);

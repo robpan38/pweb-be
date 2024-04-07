@@ -9,6 +9,7 @@ import java.util.List;
 public interface CollectionService {
 
     public List<Collection> get();
+    public List<Collection> getFilteredByName(String name);
     public Collection getById(Long id);
     public Collection add(CollectionDto collectionDto);
     public Collection update(CollectionDto collectionDto);

@@ -22,13 +22,16 @@ public class ClothingGarmentController {
     private final CollectionService collectionService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<List<ClothingGarment>> get() {
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
+    public ResponseEntity<List<ClothingGarment>> get(@RequestParam(required = false) String name) {
+        if (name != null) {
+            return ResponseEntity.ok(cgService.getFilteredByName(name));
+        }
         return ResponseEntity.ok(cgService.get());
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
     public ResponseEntity<ClothingGarment> getById(@PathVariable Long id) {
         if (!cgService.verifyClothingGarmentExists(id)) {
             return ResponseEntity.status(404).body(null);
@@ -38,7 +41,7 @@ public class ClothingGarmentController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
     public ResponseEntity<String> add(@RequestBody ClothingGarmentDto clothingGarmentDto) {
         if (clothingGarmentDto.getName() == null) {
             return ResponseEntity.status(400).body("Provide a name for the clothing garment");
@@ -61,7 +64,7 @@ public class ClothingGarmentController {
     }
 
     @PostMapping("/update")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
     public ResponseEntity<String> update(@RequestBody ClothingGarmentDto clothingGarmentDto) {
         if (clothingGarmentDto.getId() == null || !cgService.verifyClothingGarmentExists(clothingGarmentDto.getId())) {
             return ResponseEntity.status(400).body("Clothing garment does not have an associated id");
@@ -89,5 +92,18 @@ public class ClothingGarmentController {
 
         cgService.delete(id);
         return ResponseEntity.ok("Clothing garment successfully deleted");
+    }
+
+    @DeleteMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<String> deleteMultiple(@RequestBody List<Long> ids) {
+        for (Long id : ids) {
+            if (!cgService.verifyClothingGarmentExists(id)) {
+                return ResponseEntity.status(400).body("The requested clothing garment does not exist");
+            }
+
+            cgService.delete(id);
+        }
+        return ResponseEntity.ok("Clothing garments successfully deleted");
     }
 }
